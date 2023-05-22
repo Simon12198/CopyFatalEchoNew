@@ -64,11 +64,11 @@ armour_trade_bubble = pygame.transform.scale(armour_trade_bubble, (1200, 200))
 # create button instances
 #to remember order of function:
 #(self, x, y, image, scale)
-Levels_button = button.Button(SCREEN_WIDTH*1/2 - 100,screen_height * 3/4 - 30, levels_img, 1)
-tutorial_button = button.Button(SCREEN_WIDTH*1/2 - 400,screen_height * 1/4 - 100, tutorial_img, 1)
-Levels_1_button = button.Button(SCREEN_WIDTH*1/2 + 200,screen_height * 1/4 - 100, Level1_img, 1)
-Levels_2_button = button.Button(SCREEN_WIDTH*1/2 - 400,screen_height * 2/4 - 100, Level2_img, 1)
-Levels_3_button = button.Button(SCREEN_WIDTH*1/2 + 200,screen_height * 2/4 - 100, Level3_img, 1)
+Levels_button = button.Button(SCREEN_WIDTH * 1 / 2 - 100, screen_height * 3 / 4 - 30, levels_img, 1)
+tutorial_button = button.Button(SCREEN_WIDTH * 1 / 2 - 400, screen_height * 1 / 4 - 100, tutorial_img, 1)
+Levels_1_button = button.Button(SCREEN_WIDTH * 1 / 2 + 200, screen_height * 1 / 4 - 100, Level1_img, 1)
+Levels_2_button = button.Button(SCREEN_WIDTH * 1 / 2 - 400, screen_height * 2 / 4 - 100, Level2_img, 1)
+Levels_3_button = button.Button(SCREEN_WIDTH * 1 / 2 + 200, screen_height * 2 / 4 - 100, Level3_img, 1)
 Levels_4_button = button.Button(SCREEN_WIDTH*1/2 - 400,screen_height * 7/8 - 100, Level4_img, 1)
 resume_button = button.Button(SCREEN_WIDTH*1/2 - 100,screen_height * 1/4, resume_img, 1.2)
 options_button = button.Button(SCREEN_WIDTH*1/2 - 100,screen_height * 2/4, options_img, 1.2)
@@ -131,7 +131,7 @@ screen_change = False
 main_music = 'unpaused'
 merchant_mode = 'main'
 merchant_collide = False
-level = Level([], 'data/levels/level_2/', display, 'Simon')
+level = Level([], 'data/levels/level_0/', display, 'Eric')
 RUNNING, PAUSE, TITLESCREEN, STARTSCREEN, ENDSCREEN, EASTEREGG, EEPAUSE, MERCHANT = 0, 1, 2, 3, 4, 5, 6, 7
 state = TITLESCREEN
 stop_drawing = False
@@ -143,10 +143,9 @@ n = 1
 
 
 while True:
-
     for e in pygame.event.get():
         if e.type == attack:
-            level.attack()
+            level.damage_taken = True
         if e.type == screenswitch:
             state = STARTSCREEN
         if e.type == finished_switch:
@@ -185,7 +184,10 @@ while True:
 
     else:
         if state == RUNNING:
-            if main_music == 'paused':
+            if level.imposter_kill:
+                pygame.mixer_music.pause()
+                main_music = 'paused'
+            if main_music == 'paused' and level.imposter_kill == False:
                 menu_music.stop()
                 pygame.mixer_music.unpause()
                 main_music = 'unpaused'
@@ -193,6 +195,7 @@ while True:
                 level.draw_bg()
                 level.run()
                 level.draw_hearts()
+
             screen.blit(pygame.transform.scale(display, WINDOW_SIZE), (0, 0))
             if level.done:
                 level = Level([], f'data/levels/level_{n}/', display, 'Simon')
@@ -205,7 +208,6 @@ while True:
             if merchant_mode == "main":
                 merchant_speak1 = False
                 merchant_speak = False
-                merchant_sound.stop()
                 merchant_sound.stop()
 
                 main_music = 'paused'

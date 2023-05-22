@@ -21,7 +21,7 @@ class Mushroom(pygame.sprite.Sprite):
         self.move_counter = 0
 
     def import_animation(self):
-        path = 'data/graphics/'
+        path = '../FatalEchoNew-master/data/graphics/'
         self.animations = {'idle': []}
         animation_data = load_animations(path, 'mushroom')
         self.animation_frames = animation_data[0]
@@ -74,7 +74,7 @@ class Imposter(pygame.sprite.Sprite):
             self.frame = 0
             self.anim = self.animation_frames[self.action]
     def import_animation(self):
-        path = 'data/graphics/'
+        path = '../FatalEchoNew-master/data/graphics/'
         self.animations = {'idle': [], 'attack': []}
         animation_data = load_animations(path, 'imposter')
         self.animation_frames = animation_data[0]
@@ -129,7 +129,7 @@ class Swordsman(pygame.sprite.Sprite):
 
 
     def import_animation(self):
-        path = 'data/graphics/'
+        path = '../FatalEchoNew-master/data/graphics/'
         self.animations = {'idle': [], 'attack': [], 'run': []}
         animation_data = load_animations(path, 'swordsman')
         self.animation_frames = animation_data[0]

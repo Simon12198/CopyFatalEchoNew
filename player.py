@@ -30,9 +30,9 @@ class Player(pygame.sprite.Sprite):
         self.image = self.animations[self.action][self.anim[self.frame]]
         self.rect = self.image.get_rect(topleft=loc)
         #heart images
-        self.full_heart = pygame.image.load('data/graphics/bg_images/heart.png').convert_alpha()
-        self.half_heart = pygame.image.load('data/graphics/bg_images/half_heart.png').convert_alpha()
-        self.empty_heart = pygame.image.load('data/graphics/bg_images/empty_heart.png').convert_alpha()
+        self.full_heart = pygame.image.load('../FatalEchoNew-master/data/graphics/bg_images/heart.png').convert_alpha()
+        self.half_heart = pygame.image.load('../FatalEchoNew-master/data/graphics/bg_images/half_heart.png').convert_alpha()
+        self.empty_heart = pygame.image.load('../FatalEchoNew-master/data/graphics/bg_images/empty_heart.png').convert_alpha()
         # debugging for slope collisions by pixel
         self.mask = pygame.mask.from_surface(self.image.convert_alpha())
         self.DEBUG = False
@@ -138,7 +138,7 @@ class Player(pygame.sprite.Sprite):
             self.vertical_momentum = 3
 
     def import_animation(self):
-        path = 'data/graphics/'
+        path = '../FatalEchoNew-master/data/graphics/'
         self.animations = {'idle': [], 'run': [], 'jump': [], 'fall': [], 'damage_idle': [], 'damage_run': [], 'damage_jump': [], 'damage_fall': []}
         animation_data = load_animations(path, 'player')
         self.animation_frames = animation_data[0]
