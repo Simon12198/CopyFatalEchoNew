@@ -10,7 +10,6 @@ def import_csv_files(path):
         for row in level:
             game_map.append(list(row))
         return game_map
-
 def slicing_tiles(path, tile_size = (16, 16)):
     image = pygame.image.load(path).convert_alpha()
     tile_x = int(image.get_size()[0] / tile_size[0])
@@ -24,7 +23,4 @@ def slicing_tiles(path, tile_size = (16, 16)):
             surface.set_colorkey((0, 0, 0))
             surface.blit(image, (0, 0), pygame.Rect(x, y, tile_size[0], tile_size[1]))
             tiles.append(surface)
-
     return tiles
-
-

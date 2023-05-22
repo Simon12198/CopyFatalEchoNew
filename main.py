@@ -39,7 +39,7 @@ audio_img = pygame.image.load('data/graphics/images/button_audio.png').convert_a
 keys_img = pygame.image.load('data/graphics/images/button_keys.png').convert_alpha()
 easter_egg_img = pygame.image.load('data/graphics/images/easteregg.png').convert_alpha()
 back_img = pygame.image.load('data/graphics/images/button_back.png').convert_alpha()
-logo_img = pygame.image.load('data/graphics/images/fatalecho (1).png').convert()
+logo_img = pygame.image.load('data/graphics/images/titlescreenimage.png').convert()
 logo_img = pygame.transform.scale(logo_img, (SCREEN_WIDTH, screen_height))
 mini_logo_img = pygame.image.load('data/graphics/images/logosmall.png').convert()
 name_logo_img = pygame.image.load('data/graphics/images/namelogo.png').convert()
@@ -61,14 +61,16 @@ mushroom_trade_bubble = pygame.image.load('data/graphics/images/mushroom_trade_b
 armour_trade_bubble = pygame.image.load('data/graphics/images/armour_trade_bubble.png').convert_alpha()
 mushroom_trade_bubble = pygame.transform.scale(mushroom_trade_bubble, (1200, 200))
 armour_trade_bubble = pygame.transform.scale(armour_trade_bubble, (1200, 200))
+logo_img = pygame.transform.scale(logo_img, (1200, 640))
+
 # create button instances
 #to remember order of function:
 #(self, x, y, image, scale)
-Levels_button = button.Button(SCREEN_WIDTH * 1 / 2 - 100, screen_height * 3 / 4 - 30, levels_img, 1)
-tutorial_button = button.Button(SCREEN_WIDTH * 1 / 2 - 400, screen_height * 1 / 4 - 100, tutorial_img, 1)
-Levels_1_button = button.Button(SCREEN_WIDTH * 1 / 2 + 200, screen_height * 1 / 4 - 100, Level1_img, 1)
-Levels_2_button = button.Button(SCREEN_WIDTH * 1 / 2 - 400, screen_height * 2 / 4 - 100, Level2_img, 1)
-Levels_3_button = button.Button(SCREEN_WIDTH * 1 / 2 + 200, screen_height * 2 / 4 - 100, Level3_img, 1)
+Levels_button = button.Button(SCREEN_WIDTH*1/2 - 100,screen_height * 3/4 - 30, levels_img, 1)
+tutorial_button = button.Button(SCREEN_WIDTH*1/2 - 400,screen_height * 1/4 - 100, tutorial_img, 1)
+Levels_1_button = button.Button(SCREEN_WIDTH*1/2 + 200,screen_height * 1/4 - 100, Level1_img, 1)
+Levels_2_button = button.Button(SCREEN_WIDTH*1/2 - 400,screen_height * 2/4 - 100, Level2_img, 1)
+Levels_3_button = button.Button(SCREEN_WIDTH*1/2 + 200,screen_height * 2/4 - 100, Level3_img, 1)
 Levels_4_button = button.Button(SCREEN_WIDTH*1/2 - 400,screen_height * 7/8 - 100, Level4_img, 1)
 resume_button = button.Button(SCREEN_WIDTH*1/2 - 100,screen_height * 1/4, resume_img, 1.2)
 options_button = button.Button(SCREEN_WIDTH*1/2 - 100,screen_height * 2/4, options_img, 1.2)
@@ -113,8 +115,6 @@ finished_switch = pygame.USEREVENT + 1
 attack = pygame.USEREVENT + 2
 pygame.time.set_timer(finished_switch, time)
 pygame.time.set_timer(screenswitch, time)
-
-pygame.time.set_timer(attack, cooldown)
 # Audio
 pygame.mixer.init()
 
@@ -131,7 +131,7 @@ screen_change = False
 main_music = 'unpaused'
 merchant_mode = 'main'
 merchant_collide = False
-level = Level([], 'data/levels/level_0/', display, 'Eric')
+level = Level([], 'data/levels/level_0/', display, 'Simon')
 RUNNING, PAUSE, TITLESCREEN, STARTSCREEN, ENDSCREEN, EASTEREGG, EEPAUSE, MERCHANT = 0, 1, 2, 3, 4, 5, 6, 7
 state = TITLESCREEN
 stop_drawing = False
@@ -140,12 +140,8 @@ merchant_speak1 = False
 merchant_sound = pygame.mixer.Sound("data/music/merchant_talking.wav")
 merchant_sound.set_volume(0.2)
 n = 1
-
-
 while True:
     for e in pygame.event.get():
-        if e.type == attack:
-            level.damage_taken = True
         if e.type == screenswitch:
             state = STARTSCREEN
         if e.type == finished_switch:
@@ -195,19 +191,18 @@ while True:
                 level.draw_bg()
                 level.run()
                 level.draw_hearts()
-
             screen.blit(pygame.transform.scale(display, WINDOW_SIZE), (0, 0))
             if level.done:
-                level = Level([], f'data/levels/level_{n}/', display, 'Simon')
+                level = Level([], f'data/levels/level_{n}/', display, 'Simon', info = [level.mushroom_inv, [level.health, level.max_health], level.coin_inv])
                 n += 1
             pygame.display.update()  # update the screen
-
         elif state == MERCHANT:
             #code for merchants, buttons and everything
             screen.fill('grey')
             if merchant_mode == "main":
                 merchant_speak1 = False
                 merchant_speak = False
+                merchant_sound.stop()
                 merchant_sound.stop()
 
                 main_music = 'paused'

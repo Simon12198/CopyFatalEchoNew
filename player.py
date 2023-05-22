@@ -1,4 +1,4 @@
-import pygame, os, math
+import pygame, os, time
 
 from animation import load_animations
 
@@ -41,7 +41,7 @@ class Player(pygame.sprite.Sprite):
         self.x = loc[0]
         self.y = loc[1]
         self.invincibility = False
-        self.jump_counter = 0
+        self.jump_counter = 1
         self.movement = [0, 0]
         self.air_timer = 0
         self.velocity = 0
@@ -216,4 +216,3 @@ class Player(pygame.sprite.Sprite):
 
         self.implement_anim(True)
         self.status()
-
